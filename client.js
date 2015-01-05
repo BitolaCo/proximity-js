@@ -1,9 +1,12 @@
-
-(function(w) {
+/*! This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+/*! Lazy-loading of images based on lazyload.js (c) Lorenzo Giuliani
+ * MIT License (http://www.opensource.org/licenses/mit-license.html) */
+ (function(w) {
 
     /**
-     * Lazy-loading of images based on lazyload.js (c) Lorenzo Giuliani
-     * MIT License (http://www.opensource.org/licenses/mit-license.html)
+
      *
      * Expects:
      * `<img src="blank.gif" data-src="my-image.png" data-bg="my-image.png" data-ratio="2:1" class="optimized">`
