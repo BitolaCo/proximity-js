@@ -1,0 +1,40 @@
+<!doctype html>
+
+<html>
+<head>
+    <style>
+        .optimized {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div style="height: 2000px;">
+
+    </div>
+
+    <div style="float: left; width: 25%">
+        <img class="optimized"
+             src="blank.gif"
+             data-src="//upload.wikimedia.org/wikipedia/commons/thumb/6/69/Teli_Ka_Mandir%2C_Gwalior_Fort.JPG/75px-Teli_Ka_Mandir%2C_Gwalior_Fort.JPG"
+             data-ratio="16:1"
+             alt="Test image">
+    </div>
+
+    <div style="float: left; width: 25%; height: 100px; background-size: cover; background-image: url(blank.gif)"
+         class="optimized"
+         data-bg="//upload.wikimedia.org/wikipedia/commons/thumb/6/69/Teli_Ka_Mandir%2C_Gwalior_Fort.JPG/75px-Teli_Ka_Mandir%2C_Gwalior_Fort.JPG">
+        &nbsp;
+    </div>
+
+
+<script src="client.min.js"></script>
+<script>
+(function() {
+    (new Proximity()).init();
+})();
+</script>
+</body>
+</html>
