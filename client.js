@@ -18,7 +18,7 @@
 
         this.images = [];
         this.settings = {
-            proxy: settings && settings.proxy || false,
+            proxy: settings && settings.proxy || "//images.bitola.co",
             WebP: false,
             forceRatio: settings && settings.forceRatio || false,
             cl: cl,
@@ -61,13 +61,13 @@
         }
 
         testWebP(function(support) {
-            self.settings.WebP = support;
+            self.settings.WebP = false;//support;
         });
 
     }
 
     Proximity.prototype.setWebPSrc = function(src) {
-        return src.replace(/\.(png|jpe?g|gif)/gi, ".$1.webp")
+        return src.replace(/\.(png|jpe?g|gif)$/i, ".$1.webp")
     };
 
     Proximity.prototype.loadImage = function(el, fn) {
@@ -79,23 +79,21 @@
 
         // Loading an image.
         if (src) {
+
             if (self.settings.WebP) {
                 src = this.setWebPSrc(src);
+            } else {
+                src = this.getImgSrc(src, el.offsetWidth);
             }
+
             img.onload = function () {
-                if (!! el.parent) {
-                    el.parent.replaceChild(img, el)
-                } else {
-                    el.src = src;
-                }
-                // This removes the preset ratio if desired, to allow a "natural" height.
-                if (! self.settings.forceRatio) {
-                    el.style.height = "auto";
-                }
+                el.src = src;
+                self.imgSetHeight(el);
                 fn && "function" === typeof fn ? fn() : null;
             };
 
-            img.src = this.getImgSrc(src, el.offsetWidth);
+            img.src = src;
+
         }
 
         // Loading a background.
@@ -104,6 +102,7 @@
                 bg = this.setWebPSrc(bg);
             }
             el.style.backgroundImage = "url(" + this.getImgSrc(bg, el.offsetWidth) + ")";
+            self.imgSetHeight(el);
         }
 
     };
@@ -114,7 +113,7 @@
             return src;
         }
 
-        return ["/", this.settings.proxy, width, src].join("/");
+        return [this.settings.proxy, width, src].join("/");
 
     };
 
@@ -132,17 +131,25 @@
         var width = img.offsetWidth,
             ratio = img.getAttribute("data-ratio")
                 ? img.getAttribute("data-ratio")
-                : 1;
+                : 0;
 
-        // Set the proper height.
-        if (ratio !== 1) {
-            var r = ratio.split(":");
-            if(r.length > 1) {
-                ratio = parseFloat(r[1] || 1) / parseFloat(r[0] || 1);
-            }
+        // Set the proper height if ratio supplied. Otherwise do nothing.
+        if (! ratio) {
+            return;
         }
 
+
+        if (ratio === "auto" || ratio === "inherit") {
+            img.style.height = ratio;
+            return
+        }
+
+        var r = ratio.split(":");
+        if(r.length > 1) {
+            ratio = parseFloat(r[1] || 1) / parseFloat(r[0] || 1);
+        }
         img.style.height = (width * ratio) + "px";
+
 
     };
 
@@ -150,7 +157,9 @@
 
         var query = document.querySelectorAll("." + this.settings.cl);
         for (var i = 0; i < query.length; i++) {
-            this.imgSetHeight(query[i]);
+            if(query[i].tagName === "IMG") {
+                this.imgSetHeight(query[i]);
+            }
             this.images.push(query[i]);
         }
 

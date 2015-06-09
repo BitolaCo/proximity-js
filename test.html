@@ -21,14 +21,20 @@
     <div style="float: left; width: 25%">
         <img class="optimized"
              src="blank.gif"
-             data-src="//upload.wikimedia.org/wikipedia/commons/thumb/6/69/Teli_Ka_Mandir%2C_Gwalior_Fort.JPG/75px-Teli_Ka_Mandir%2C_Gwalior_Fort.JPG"
-             data-ratio="16:1"
+             data-src="/wikipedia/commons/6/68/Barnard_33.jpg"
+             data-ratio="16:16"
              alt="Test image">
     </div>
 
     <div style="float: left; width: 25%; height: 100px; background-size: cover; background-image: url(blank.gif)"
          class="optimized"
-         data-bg="//upload.wikimedia.org/wikipedia/commons/thumb/6/69/Teli_Ka_Mandir%2C_Gwalior_Fort.JPG/75px-Teli_Ka_Mandir%2C_Gwalior_Fort.JPG">
+         data-bg="/wikipedia/commons/6/68/Barnard_33.jpg">
+        &nbsp;
+    </div>
+
+    <div data-ratio="1:3" style="float: left; width: 25%; background-size: cover; background-image: url(blank.gif)"
+         class="optimized"
+         data-bg="/wikipedia/commons/6/68/Barnard_33.jpg">
         &nbsp;
     </div>
 
@@ -36,7 +42,8 @@
 <script src="client.min.js"></script>
 <script>
 (function() {
-    (new Proximity()).init();
+    window.p = new Proximity({ proxy: 'http://127.0.0.1:4000' });
+    p.init();
 })();
 </script>
 </body>
